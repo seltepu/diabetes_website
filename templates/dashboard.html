@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Management Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+
+    <div class="dashboard-container">
+        <h1>Diabetes Management Hub</h1>
+        <div class="feature-grid">
+            <div class="feature-tile" onclick="openModal('prediction-modal')">
+                <div class="feature-header">
+                    <div class="feature-icon">
+                        <img src="{{ url_for('static', filename='icons/graph.svg') }}" alt="graph">
+                    </div>
+                    <h2>Blood Sugar Prediction</h2>
+                </div>
+                <div class="feature-content">
+                    <p>Predict your blood sugar levels for the next few hours using AI analysis</p>
+                </div>
+            </div>
+
+            <div class="feature-tile" onclick="openModal('symptom-modal')">
+                <div class="feature-header">
+                    <div class="feature-icon">
+                        <img src="{{ url_for('static', filename='icons/chat.svg') }}" alt="chat">
+                    </div>
+                    <h2>AI Symptom Checker</h2>
+                </div>
+                <div class="feature-content">
+                    <p>Check your symptoms against known diabetes complications</p>
+                </div>
+            </div>
+
+    <div id="prediction-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('prediction-modal')">&times;</span>
+            <h2>Blood Sugar Prediction</h2>
+            <form id="prediction-form">
+                <select name="hours" required>
+                    <option value="">Select prediction timeframe</option>
+                    <option value="2">Next 2 hours</option>
+                    <option value="4">Next 4 hours</option>
+                    <option value="6">Next 6 hours</option>
+                    <option value="8">Next 8 hours</option>
+                </select>
+                <input type="number" name="current_level" placeholder="Current blood sugar level" required>
+                <select name="last_meal" required>
+                    <option value="">Last meal timing</option>
+                    <option value="0">Just ate</option>
+                    <option value="1">1 hour ago</option>
+                    <option value="2">2 hours ago</option>
+                    <option value="3">3+ hours ago</option>
+                </select>
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Get Prediction</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('prediction-modal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="symptom-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('symptom-modal')">&times;</span>
+            <h2>AI Symptom Checker</h2>
+            <div class="condition-grid">
+                <div class="condition-card" onclick="showAnalysis('retinopathy')">
+                    <h3>Diabetic Retinopathy</h3>
+                    <p>Vision problems and eye damage</p>
+                </div>
+                <div class="condition-card" onclick="showAnalysis('nephropathy')">
+                    <h3>Diabetic Nephropathy</h3>
+                    <p>Kidney disease or damage</p>
+                </div>
+                <div class="condition-card" onclick="showAnalysis('neuropathy')">
+                    <h3>Diabetic Neuropathy</h3>
+                    <p>Nerve damage throughout body</p>
+                </div>
+            </div>
+            <div id="analysis-result" class="analysis-box" style="display: none;">
+            </div>
+        </div>
+    </div>
+
+    <div id="activity-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('activity-modal')">&times;</span>
+            <h2>Activity Impact Analyzer</h2>
+            <form id="activity-form">
+                <select name="activity_type" required>
+                    <option value="">Select activity type</option>
+                    <option value="walking">Walking</option>
+                    <option value="running">Running</option>
+                    <option value="swimming">Swimming</option>
+                    <option value="cycling">Cycling</option>
+                </select>
+                <input type="number" name="duration" placeholder="Duration (minutes)" required>
+                <input type="number" name="intensity" placeholder="Intensity (1-10)" required min="1" max="10">
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Analyze Impact</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('activity-modal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function showAnalysis(condition) {
+            const analysisBox = document.getElementById('analysis-result');
+            let analysis = '';
+            
+            switch(condition) {
+                case 'retinopathy':
+                    analysis = `
+                        <h3>Diabetic Retinopathy Analysis</h3>
+                        <p>Common symptoms include:</p>
+                        <ul>
+                            <li>Blurred or fluctuating vision</li>
+                            <li>Impaired color vision</li>
+                            <li>Dark or empty areas in vision</li>
+                            <li>Difficulty seeing at night</li>
+                        </ul>
+                    `;
+                    break;
+                case 'nephropathy':
+                    analysis = `
+                        <h3>Diabetic Nephropathy Analysis</h3>
+                        <p>Common symptoms include:</p>
+                        <ul>
+                            <li>Swelling in feet and ankles</li>
+                            <li>High blood pressure</li>
+                            <li>Foamy urine</li>
+                            <li>Increased need to urinate</li>
+                        </ul>
+                    `;
+                    break;
+                case 'neuropathy':
+                    analysis = `
+                        <h3>Diabetic Neuropathy Analysis</h3>
+                        <p>Common symptoms include:</p>
+                        <ul>
+                            <li>Numbness in hands or feet</li>
+                            <li>Burning sensation</li>
+                            <li>Sharp pains or cramps</li>
+                            <li>Sensitivity to touch</li>
+                        </ul>
+                    `;
+                    break;
+            }
+            
+            analysisBox.innerHTML = analysis;
+            analysisBox.style.display = 'block';
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
