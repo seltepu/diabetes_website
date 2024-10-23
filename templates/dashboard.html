@@ -39,77 +39,96 @@
                     <p>Check your symptoms against known diabetes complications</p>
                 </div>
             </div>
-
-    <div id="prediction-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeModal('prediction-modal')">&times;</span>
-            <h2>Blood Sugar Prediction</h2>
-            <form id="prediction-form">
-                <select name="hours" required>
-                    <option value="">Select prediction timeframe</option>
-                    <option value="2">Next 2 hours</option>
-                    <option value="4">Next 4 hours</option>
-                    <option value="6">Next 6 hours</option>
-                    <option value="8">Next 8 hours</option>
-                </select>
-                <input type="number" name="current_level" placeholder="Current blood sugar level" required>
-                <select name="last_meal" required>
-                    <option value="">Last meal timing</option>
-                    <option value="0">Just ate</option>
-                    <option value="1">1 hour ago</option>
-                    <option value="2">2 hours ago</option>
-                    <option value="3">3+ hours ago</option>
-                </select>
-                <div class="button-group">
-                    <button type="submit" class="btn btn-primary">Get Prediction</button>
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('prediction-modal')">Cancel</button>
-                </div>
-            </form>
         </div>
-    </div>
 
-    <div id="symptom-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeModal('symptom-modal')">&times;</span>
-            <h2>AI Symptom Checker</h2>
-            <div class="condition-grid">
-                <div class="condition-card" onclick="showAnalysis('retinopathy')">
-                    <h3>Diabetic Retinopathy</h3>
-                    <p>Vision problems and eye damage</p>
-                </div>
-                <div class="condition-card" onclick="showAnalysis('nephropathy')">
-                    <h3>Diabetic Nephropathy</h3>
-                    <p>Kidney disease or damage</p>
-                </div>
-                <div class="condition-card" onclick="showAnalysis('neuropathy')">
-                    <h3>Diabetic Neuropathy</h3>
-                    <p>Nerve damage throughout body</p>
-                </div>
-            </div>
-            <div id="analysis-result" class="analysis-box" style="display: none;">
+        <!-- Blood Sugar Prediction Modal -->
+        <div id="prediction-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('prediction-modal')">&times;</span>
+                <h2>Blood Sugar Prediction</h2>
+                <form id="prediction-form">
+                    <select name="hours" required>
+                        <option value="">Select prediction timeframe</option>
+                        <option value="2">Next 2 hours</option>
+                        <option value="4">Next 4 hours</option>
+                        <option value="6">Next 6 hours</option>
+                        <option value="8">Next 8 hours</option>
+                    </select>
+                    <input type="number" name="current_level" placeholder="Current blood sugar level" required>
+                    <select name="last_meal" required>
+                        <option value="">Last meal timing</option>
+                        <option value="0">Just ate</option>
+                        <option value="1">1 hour ago</option>
+                        <option value="2">2 hours ago</option>
+                        <option value="3">3+ hours ago</option>
+                    </select>
+                    <div class="button-group">
+                        <button type="submit" class="btn btn-primary">Get Prediction</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('prediction-modal')">Cancel</button>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
 
-    <div id="activity-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeModal('activity-modal')">&times;</span>
-            <h2>Activity Impact Analyzer</h2>
-            <form id="activity-form">
-                <select name="activity_type" required>
-                    <option value="">Select activity type</option>
-                    <option value="walking">Walking</option>
-                    <option value="running">Running</option>
-                    <option value="swimming">Swimming</option>
-                    <option value="cycling">Cycling</option>
-                </select>
-                <input type="number" name="duration" placeholder="Duration (minutes)" required>
-                <input type="number" name="intensity" placeholder="Intensity (1-10)" required min="1" max="10">
-                <div class="button-group">
-                    <button type="submit" class="btn btn-primary">Analyze Impact</button>
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('activity-modal')">Cancel</button>
+        <!-- Symptom Checker Modal -->
+        <div id="symptom-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('symptom-modal')">&times;</span>
+                <h2>AI Symptom Checker</h2>
+                <div class="condition-grid">
+                    <div class="condition-card" onclick="showAnalysis('retinopathy')">
+                        <h3>Diabetic Retinopathy</h3>
+                        <p>Vision problems and eye damage</p>
+                    </div>
+                    <div class="condition-card" onclick="showAnalysis('nephropathy')">
+                        <h3>Diabetic Nephropathy</h3>
+                        <p>Kidney disease or damage</p>
+                    </div>
+                    <div class="condition-card" onclick="showAnalysis('neuropathy')">
+                        <h3>Diabetic Neuropathy</h3>
+                        <p>Nerve damage throughout body</p>
+                    </div>
                 </div>
-            </form>
+
+                <div id="analysis-result" class="analysis-box" style="display: none;">
+                    <!-- Analysis content will be inserted here -->
+                </div>
+
+                <div id="retinopathy-upload" class="upload-section" style="display: none; margin-top: 20px;">
+                    <h3>Upload Retina Image for Analysis</h3>
+                    <form id="retina-upload-form" enctype="multipart/form-data">
+                        <input type="file" id="retina-image" name="image" accept="image/png,image/jpeg" required>
+                        <button type="submit" class="btn btn-primary">Analyze Image</button>
+                    </form>
+                    <div id="analysis-results" style="margin-top: 20px;">
+                        <div id="uploaded-image" style="max-width: 300px; margin: 10px 0;"></div>
+                        <div id="prediction-result"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity Impact Modal -->
+        <div id="activity-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal('activity-modal')">&times;</span>
+                <h2>Activity Impact Analyzer</h2>
+                <form id="activity-form">
+                    <select name="activity_type" required>
+                        <option value="">Select activity type</option>
+                        <option value="walking">Walking</option>
+                        <option value="running">Running</option>
+                        <option value="swimming">Swimming</option>
+                        <option value="cycling">Cycling</option>
+                    </select>
+                    <input type="number" name="duration" placeholder="Duration (minutes)" required>
+                    <input type="number" name="intensity" placeholder="Intensity (1-10)" required min="1" max="10">
+                    <div class="button-group">
+                        <button type="submit" class="btn btn-primary">Analyze Impact</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('activity-modal')">Cancel</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -124,7 +143,12 @@
 
         function showAnalysis(condition) {
             const analysisBox = document.getElementById('analysis-result');
+            const uploadSection = document.getElementById('retinopathy-upload');
             let analysis = '';
+            
+            // Reset display
+            analysisBox.style.display = 'block';
+            uploadSection.style.display = 'none';
             
             switch(condition) {
                 case 'retinopathy':
@@ -137,7 +161,9 @@
                             <li>Dark or empty areas in vision</li>
                             <li>Difficulty seeing at night</li>
                         </ul>
+                        <p>Upload a retinal image for AI analysis:</p>
                     `;
+                    uploadSection.style.display = 'block';
                     break;
                 case 'nephropathy':
                     analysis = `
@@ -166,9 +192,61 @@
             }
             
             analysisBox.innerHTML = analysis;
-            analysisBox.style.display = 'block';
         }
 
+        document.getElementById('retina-upload-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            const imageFile = document.getElementById('retina-image').files[0];
+            formData.append('image', imageFile);
+            
+            // Show loading state
+            document.getElementById('prediction-result').innerHTML = '<p>Analyzing image...</p>';
+            
+            fetch('/analyze_retina', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('prediction-result').innerHTML = `
+                        <p class="error">${data.error}</p>
+                    `;
+                } else {
+                    document.getElementById('uploaded-image').innerHTML = `
+                        <img src="data:image/png;base64,${data.image}" style="max-width: 100%;">
+                    `;
+                    document.getElementById('prediction-result').innerHTML = `
+                        <h4>Analysis Results:</h4>
+                        <p>Prediction: ${data.prediction}</p>
+                        <p>Confidence: ${data.confidence.toFixed(2)}%</p>
+                        <p>Recommendation: ${getRecommendation(data.prediction)}</p>
+                    `;
+                }
+            })
+            .catch(error => {
+                document.getElementById('prediction-result').innerHTML = `
+                    <p class="error">Error: ${error.message}</p>
+                `;
+            });
+        });
+
+        function getRecommendation(prediction) {
+            switch(prediction) {
+                case 'No DR':
+                    return 'Continue regular check-ups and maintain good blood sugar control.';
+                case 'Mild DR':
+                    return 'Schedule an appointment with your eye doctor for a detailed examination.';
+                case 'Severe DR':
+                    return 'Urgent: Please seek immediate medical attention from an eye specialist.';
+                default:
+                    return 'Please consult with your healthcare provider for personalized advice.';
+            }
+        }
+
+        // Close modals when clicking outside
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 event.target.style.display = 'none';

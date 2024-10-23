@@ -242,3 +242,36 @@ form button:hover {
     padding: 15px;
     margin-top: 20px;
 }
+    
+.upload-section {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.upload-section input[type="file"] {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#analysis-results {
+    margin-top: 20px;
+}
+
+#prediction-result {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.error {
+    color: #dc3545;
+    font-weight: bold;
+}
